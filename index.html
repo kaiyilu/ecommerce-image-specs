@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ecommerce Image Specs — Shopify Safe Zones, Amazon 85% Fill &amp; SKU ZIP Math</title>
+  <meta name="description" content="Open-source reference formulas for Shopify OS 2.0 image dimensions and mobile banner safe zones, Amazon RGB(255,255,255) 85% product fill, Etsy 5:4 thumbnails, and Excel URL-to-SKU ZIP sanitization." />
+  <link rel="canonical" href="https://kaiyilu.github.io/ecommerce-image-specs/" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --accent: #0f766e;
+      --accent-soft: #f0fdfa;
+      --code-bg: #0f172a;
+      --code-ink: #f8fafc;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.65;
+    }
+    header {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 2.75rem 1.25rem;
+      border-bottom: 4px solid #14b8a6;
+    }
+    .wrap {
+      max-width: 880px;
+      margin: 0 auto;
+    }
+    .eyebrow {
+      color: #5eead4;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.45rem;
+    }
+    h1 {
+      margin: 0 0 0.65rem;
+      font-size: clamp(1.65rem, 3.4vw, 2.3rem);
+      line-height: 1.2;
+    }
+    header p {
+      margin: 0;
+      color: #cbd5e1;
+      max-width: 700px;
+      font-size: 0.98rem;
+    }
+    main {
+      padding: 2rem 1.25rem 3.5rem;
+    }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 1.5rem 1.65rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    h2 {
+      margin-top: 0;
+      font-size: 1.28rem;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 0.55rem;
+    }
+    h3 {
+      font-size: 1.02rem;
+      margin: 1.15rem 0 0.4rem;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+      font-size: 0.92rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--line);
+    }
+    th {
+      background: #f1f5f9;
+      font-weight: 600;
+    }
+    pre {
+      background: var(--code-bg);
+      color: var(--code-ink);
+      padding: 0.95rem 1.1rem;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.88em;
+    }
+    .callout {
+      background: var(--accent-soft);
+      border-left: 4px solid var(--accent);
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.94rem;
+    }
+    a {
+      color: #0f766e;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.86rem;
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="eyebrow">Open-Source Catalog Engineering Reference</div>
+      <h1>Ecommerce Image Specs &amp; Spreadsheet SKU Asset Math</h1>
+      <p>
+        Deterministic client-side equations for Shopify OS 2.0 aspect ratios &amp; mobile banner safe zones,
+        Amazon RGB(255, 255, 255) 85% bounding-box padding, Etsy 5:4 thumbnail framing, and Excel URL-to-ZIP sanitization.
+      </p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>1. Shopify OS 2.0 (Dawn) Dimensions &amp; Mobile Center-Crop Safe Zones</h2>
+      <p>
+        Mixed supplier aspect ratios cause staggered collection rows on Shopify storefronts, while full-bleed desktop banners
+        lose up to 70% of their horizontal width when cropped into mobile portrait hero containers.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Storefront Placement</th>
+            <th>Recommended Pixels</th>
+            <th>Aspect Ratio</th>
+            <th>Primary Engineering Constraint</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Product Detail &amp; Pinch Zoom</td>
+            <td><code>2048 × 2048</code></td>
+            <td><code>1:1</code></td>
+            <td>Activates crisp Retina zoom without upscaling artifacts</td>
+          </tr>
+          <tr>
+            <td>Collection Grid Thumbnail</td>
+            <td><code>1200 × 1200</code></td>
+            <td><code>1:1</code></td>
+            <td>Uniform card height across 2-up mobile and 4-up desktop rows</td>
+          </tr>
+          <tr>
+            <td>Apparel &amp; Fashion Portrait</td>
+            <td><code>1600 × 2000</code></td>
+            <td><code>4:5</code></td>
+            <td>Full-length garment framing with zoom headroom</td>
+          </tr>
+          <tr>
+            <td>Desktop Hero Banner</td>
+            <td><code>2000 × 800</code></td>
+            <td><code>5:2</code></td>
+            <td>Central <code>600 px</code> safe width when mobile crops at <code>3:4</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <pre><code>// Center-crop safe width on a 2000x800 banner rendered in a 3:4 mobile hero
+const safeWidth = Math.min(bannerW, Math.round(bannerH * 0.75)); // 600px
+const sideTrim  = (bannerW - safeWidth) / 2;                     // 700px trimmed per side</code></pre>
+      <div class="callout">
+        Interactive browser implementations:
+        <ul>
+          <li><a href="https://usequickkit.com/shopify-image-size-guide">Shopify Image Size Guide &amp; Safe-Zone Studio</a> — preview Dawn mobile crops and export presets directly.</li>
+          <li><a href="https://usequickkit.com/shopify-product-image-resizer">Shopify Product Image Resizer</a> — pad, crop, or contain individual hero SKU photos locally.</li>
+          <li><a href="https://usequickkit.com/shopify-bulk-image-resizer">Shopify Bulk Image Resizer</a> — batch-pad catalog sets to ZIP with SEO filename prefixes and CSV byte-savings manifests.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>2. Amazon Pure White RGB(255, 255, 255) &amp; Etsy Thumbnail Compliance</h2>
+      <p>
+        Amazon Product Detail Page rules require main images on pure white <code>#FFFFFF</code> with the product occupying at least
+        85% of the frame's longest dimension and zero edge clipping. Studio light falloff around <code>RGB(248, 248, 248)</code>
+        frequently triggers automated listing suppression.
+      </p>
+      <pre><code>// Scale detected product bounding box (bboxW x bboxH) to 85% of a 2000x2000 #FFFFFF canvas
+const scale = Math.min((2000 * 0.85) / bboxW, (2000 * 0.85) / bboxH);
+const drawW = Math.round(bboxW * scale);
+const drawH = Math.round(bboxH * scale);
+const x = Math.round((2000 - drawW) / 2);
+const y = Math.round((2000 - drawH) / 2);</code></pre>
+      <div class="callout">
+        Verify and one-click fix marketplace photos locally in your browser:
+        <ul>
+          <li><a href="https://usequickkit.com/amazon-main-image-checker">Amazon Main Image Checker &amp; 2000×2000 White Auto-Fix</a></li>
+          <li><a href="https://usequickkit.com/etsy-listing-photo-checker">Etsy Listing Photo Checker (5:4 &amp; 1:1 Thumbnail Safe Pad)</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. Downloading &amp; Renaming Supplier Files from Excel / CSV URLs</h2>
+      <p>
+        Vendor catalog spreadsheets typically pair a raw CDN image/PDF URL column with a target SKU column.
+        When Excel cells wrap links inside clickable <code>=HYPERLINK()</code> formulas, extract raw addresses first, then normalize
+        reserved OS characters (<code>\ / : * ? " &lt; &gt; |</code>) and deduplicate collisions before streaming into a ZIP archive.
+      </p>
+      <pre><code>' 4-line Excel VBA UDF to extract raw URLs from clickable cells:
+Function GetURL(rng As Range) As String
+    If rng.Hyperlinks.Count &gt; 0 Then GetURL = rng.Hyperlinks(1).Address
+End Function</code></pre>
+      <div class="callout">
+        Zero-install browser spreadsheet tools:
+        <ul>
+          <li><a href="https://usequickkit.com/how-to-download-files-from-excel-urls">How to Download Multiple Files from Excel URLs (Live ZIP Tool)</a></li>
+          <li><a href="https://usequickkit.com/bulk-download-product-images-by-sku">Bulk Download &amp; Rename Product Images by SKU</a></li>
+          <li><a href="https://usequickkit.com/bulk-file-downloader">CSV &amp; Excel Bulk File Downloader</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    MIT Licensed · Source code on <a href="https://github.com/kaiyilu/ecommerce-image-specs">GitHub (kaiyilu/ecommerce-image-specs)</a>
+  </footer>
+</body>
+</html>

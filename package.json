@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce-image-specs",
+  "version": "1.0.0",
+  "description": "Zero-dependency marketplace image geometry (Shopify Dawn safe zones, Amazon 85% bounding-box fill, Etsy 5:4 thumbnail crop) and SKU spreadsheet path sanitization.",
+  "type": "module",
+  "main": "specs.mjs",
+  "scripts": {
+    "demo": "node specs.mjs"
+  },
+  "keywords": [
+    "shopify-image-sizes",
+    "amazon-main-image",
+    "etsy-listing-photos",
+    "sku-image-downloader",
+    "canvas-padding",
+    "ecommerce-catalog"
+  ],
+  "license": "MIT"
+}
