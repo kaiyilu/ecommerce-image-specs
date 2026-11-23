@@ -10,8 +10,7 @@ Zero-dependency JavaScript reference equations for ecommerce catalog photography
 ## Live Browser Tools (Zero Login, 100% Client-Side Canvas / ZIP)
 
 - **Shopify Size Studio & Safe-Zone Simulator**: [https://usequickkit.com/shopify-image-size-guide](https://usequickkit.com/shopify-image-size-guide)
-- **Shopify Single Product Image Resizer**: [https://usequickkit.com/shopify-product-image-resizer](https://usequickkit.com/shopify-product-image-resizer)
-- **Shopify Bulk Image Resizer (Batch ZIP + Manifest)**: [https://usequickkit.com/shopify-bulk-image-resizer](https://usequickkit.com/shopify-bulk-image-resizer)
+- **Shopify Image Resizer (Single SKU & Batch ZIP + Manifest)**: [https://usequickkit.com/shopify-bulk-image-resizer](https://usequickkit.com/shopify-bulk-image-resizer)
 - **Amazon Main Image Checker & 1-Click 85% White Fix**: [https://usequickkit.com/amazon-main-image-checker](https://usequickkit.com/amazon-main-image-checker)
 - **Etsy Listing Photo Crop Checker & Safe Pad**: [https://usequickkit.com/etsy-listing-photo-checker](https://usequickkit.com/etsy-listing-photo-checker)
 - **Download Multiple Files from Excel URLs (ZIP Guide & Tool)**: [https://usequickkit.com/how-to-download-files-from-excel-urls](https://usequickkit.com/how-to-download-files-from-excel-urls)
